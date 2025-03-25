@@ -213,6 +213,10 @@ class FileRenamer(QMainWindow):
         QMessageBox QPushButton:hover {
             background-color: #2980b9;
         }
+        QStatusBar {
+        color: white;  /* Testo visibile in Dark Mode */
+        background-color: #000026;
+        }
         """
         self.setStyleSheet(style)
 
@@ -267,6 +271,10 @@ class FileRenamer(QMainWindow):
         QMenu::item:selected {
             background-color: #4CAF50;
             color: white;
+        }
+        QStatusBar {
+        color: #2d2d2d;  /* Testo visibile in Light Mode */
+        background-color: #f0f0f0;
         }
         """
         self.setStyleSheet(style)
