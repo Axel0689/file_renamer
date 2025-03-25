@@ -1,9 +1,9 @@
 File Renamer
+============
 
 <p align="left">
   <img src="https://github.com/Axel0689/file_renamer/blob/c586a1b64cff37f024cfe484938689021576eed0/assets/icon.png", width="400" height="400">
 </p>
-============
 
 App desktop per rinominare file in modo personalizzato.
 
