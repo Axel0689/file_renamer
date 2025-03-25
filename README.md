@@ -5,7 +5,9 @@ File Renamer
   <img src="https://github.com/Axel0689/file_renamer/blob/c586a1b64cff37f024cfe484938689021576eed0/assets/icon.png", width="400" height="400">
 </p>
 
-App desktop per rinominare file in modo personalizzato.
+> App desktop per rinominare file in modo personalizzato.
+
+&nbsp;
 
 Funzionalità
 ------------
@@ -45,13 +47,17 @@ Installa le dipendenze:
 
 Avvio
 -----
-
     python file_renamer.py
 
 Esecuzione da file .exe
 -----------------------
 
 È possibile usare anche la versione `.exe` senza Python installato, presente in RELEASE.
+
+Updates
+---------------
+- ${\color{red}(25.03.2024)}$
+  - **${\color{green}v0.1 (Release 1)}$**
 
 Autore
 ------
