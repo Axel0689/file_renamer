@@ -56,7 +56,7 @@ Esecuzione da file .exe
 
 Updates
 ---------------
-- ${\color{red}(25.03.2024)}$
+- ${\color{red}(25.03.2025)}$
   - **${\color{green}v0.1 (Release 1)}$**
 
 Autore
