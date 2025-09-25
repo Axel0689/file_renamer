@@ -62,9 +62,9 @@ class FileRenamer(QMainWindow):
         self.prefix_input.setPlaceholderText("Prefisso (es: MyPrefix)")
         self.prefix_input.textChanged.connect(self.update_preview)
 
-        # Campo modello
+        # Campo modello (aggiornato il placeholder)
         self.pattern_input = QLineEdit()
-        self.pattern_input.setPlaceholderText("Modello (es: {prefix}_{counter}_{basename}{ext})")
+        self.pattern_input.setPlaceholderText("Modello (es: {prefix}_{counter}_{basename}) - L'estensione viene mantenuta automaticamente")
         self.pattern_input.textChanged.connect(self.update_preview)
 
         # Pulsante Insert
@@ -126,12 +126,12 @@ class FileRenamer(QMainWindow):
     def create_placeholder_menu(self):
         menu = QMenu(self)
         placeholders = [
-            ("{original}", "Nome originale completo", "Inserisce il nome originale del file"),
+            ("{original}", "Nome originale completo", "Inserisce il nome originale del file (senza estensione)"),
             ("{basename}", "Nome base senza estensione", "Inserisce il nome del file senza estensione"),
             ("{counter}", "Contatore numerico", "Inserisce un contatore con zeri prefissati"),
             ("{prefix}", "Prefisso personalizzato", "Inserisce il testo del campo 'Prefisso'"),
             ("{date}", "Data corrente", "Formattata secondo l'opzione selezionata"),
-            ("{ext}", "Estensione del file", "Inserisce l'estensione originale (es: .txt)")
+            # Rimosso {ext} dal menu dato che ora è automatico
         ]
         
         for placeholder, description, tooltip in placeholders:
@@ -314,23 +314,27 @@ class FileRenamer(QMainWindow):
                 "%Y%m%d"
             )
             
+            # Aggiornato: {original} ora si riferisce solo al basename
             replacements = {
-                "{original}": filename,
+                "{original}": base,  # Solo il nome senza estensione
                 "{basename}": base,
                 "{counter}": f"{idx:0{zeros}d}",
                 "{prefix}": self.prefix_input.text(),
                 "{date}": date_str,
-                "{ext}": ext
+                # Rimosso {ext} dalle replacements
             }
             
             new_name = pattern
             for key, value in replacements.items():
                 new_name = new_name.replace(key, value)
+            
+            # MODIFICA PRINCIPALE: aggiungiamo automaticamente l'estensione
+            new_name_with_ext = new_name + ext
                 
             row_position = self.preview_table.rowCount()
             self.preview_table.insertRow(row_position)
             self.preview_table.setItem(row_position, 0, QTableWidgetItem(filename))
-            self.preview_table.setItem(row_position, 1, QTableWidgetItem(new_name))
+            self.preview_table.setItem(row_position, 1, QTableWidgetItem(new_name_with_ext))
             
     def rename_files(self):
         if not self.selected_files:
@@ -363,20 +367,24 @@ class FileRenamer(QMainWindow):
                 "%Y%m%d"
             )
             
+            # Stesso aggiornamento per la rinomina effettiva
             replacements = {
-                "{original}": filename,
+                "{original}": base,  # Solo il nome senza estensione
                 "{basename}": base,
                 "{counter}": f"{idx:0{zeros}d}",
                 "{prefix}": self.prefix_input.text(),
                 "{date}": date_str,
-                "{ext}": ext
+                # Rimosso {ext} dalle replacements
             }
             
             new_name = pattern
             for key, value in replacements.items():
                 new_name = new_name.replace(key, value)
+            
+            # MODIFICA PRINCIPALE: aggiungiamo automaticamente l'estensione
+            new_name_with_ext = new_name + ext
                 
-            new_path = os.path.join(self.current_dir, new_name)
+            new_path = os.path.join(self.current_dir, new_name_with_ext)
             try:
                 os.rename(file_path, new_path)
             except Exception as e:
@@ -396,9 +404,10 @@ class FileRenamer(QMainWindow):
         msg.setTextFormat(Qt.RichText)
         msg.setText(
             "<b>File Renamer</b><br>"
-            "Versione 0.1<br><br>"
+            "Versione 0.2<br><br>"
             "Applicazione per la rinomina di file in modalità personalizzata.<br>"
-            "Supporta placeholder, anteprima dinamica e formati di data.<br><br>"
+            "Supporta placeholder, anteprima dinamica e formati di data.<br>"
+            "Le estensioni dei file vengono mantenute automaticamente.<br><br>"
             "<b>Crediti</b>: Sviluppata da Alessandro Bagnuoli <b>(@axel0689 - GitHub)</b>"
         )
         msg.setWindowIcon(self.windowIcon())  # Usa l'icona dell'app
