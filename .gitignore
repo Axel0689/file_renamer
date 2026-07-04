@@ -132,9 +132,15 @@ celerybeat.pid
 .venv
 env/
 venv/
+rename_env/
 ENV/
 env.bak/
 venv.bak/
+
+# Local AI assistant configuration and notes
+.claude/
+AGENTS.md
+per versione 0.3.md
 
 # Spyder project settings
 .spyderproject
